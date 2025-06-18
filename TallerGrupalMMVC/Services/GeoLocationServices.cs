@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Maui.Devices.Sensors; // Necesario para Location, Geolocation, etc.
 
 namespace TallerGrupalMMVC.Services
 {
@@ -17,44 +16,31 @@ namespace TallerGrupalMMVC.Services
             {
                 _isCheckingLocation = true;
 
-                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                 _cancelTokenSource = new CancellationTokenSource();
 
                 Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
                 if (location != null)
-                }
+                {
                     return location;
-            }
+                }
 
                 throw new Exception("Unable to get location");
-            
-            catch (Exception ex)
+            }
+            catch (Exception)
             {
                 throw;
-                
             }
             finally
             {
                 _isCheckingLocation = false;
             }
-
-            /*return new Location
-            {
-                Latitude = 0
-
-
-
-
-
-
-            };*/
         }
 
         public void CancelRequest()
         {
-            if (_isCheckingLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
+            if (_isCheckingLocation && _cancelTokenSource != null && !_cancelTokenSource.IsCancellationRequested)
                 _cancelTokenSource.Cancel();
         }
     }
