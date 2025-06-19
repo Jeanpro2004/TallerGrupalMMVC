@@ -1,13 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TallerGrupalMMVC.Models.WeatherModels; // Asegúrate de que la ruta sea correcta según tu estructura de carpetas
+using static TallerGrupalMMVC.Models.WeatherModels; 
 namespace TallerGrupalMMVC.Services
 {
     class WeatherServices
     {
+
+        public async Task <WeatherData> GetCurrentLocatonWeatherAsync()
+        {
+            GeoLocationServices geoLocationServices = new GeoLocationServices();
+            Location location = await geoLocationServices.GetCurrentLocation();
+         
+            return await GetWeatherDataFromLocationAsync(location.Latitude, location.Longitude);
+        }
         public async Task<WeatherData> GetWeatherDataFromLocationAsync(double latitude, double longitude)
         {
             string latitude_str = latitude.ToString().Replace(",", ".");
@@ -19,8 +28,9 @@ namespace TallerGrupalMMVC.Services
             {
                 var response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
-                var result = response.Content.ReadAsStringAsync();
-
+                var result = await response.Content.ReadAsStringAsync();
+                WeatherData data = JsonConvert.DeserializeObject<WeatherData>(result);
+                return data;
 
             }
         }

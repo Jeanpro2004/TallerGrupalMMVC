@@ -26,16 +26,21 @@ namespace TallerGrupalMMVC.Services
                     return location;
                 }
 
-                throw new Exception("Unable to get location");
+                //throw new Exception("Unable to get location");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                //throw;
             }
             finally
             {
                 _isCheckingLocation = false;
             }
+            return new Location
+            {
+                Latitude = 0,
+                Longitude = 0,
+            };
         }
 
         public void CancelRequest()

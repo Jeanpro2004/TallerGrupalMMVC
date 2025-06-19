@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TallerGrupalMMVC.ViewModels"
+             x:Class="TallerGrupalMMVC.Views.WeatherView"
+             Title="WeatherView">
+
+    <ContentPage.BindingContext>
+        <vm:WeatherViewModel/>
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout>
+        <Label 
+           x:Name="LabelTemperature"
+           Text="{Binding WeatherDataInfo.current.temperature_2m}" />
+
+        <Label 
+           x:Name="LabelTemperatureUnit"
+           Text="{Binding WeatherDataInfo.current_units.temperature_2m}" />
+
+        <Label 
+           x:Name="LabelHumidity"
+           Text="{Binding WeatherDataInfo.current.relative_humidity_2m}" />
+
+        <Label 
+           x:Name="LabelHumidityUnit"
+           Text="{Binding WeatherDataInfo.current_units.relative_humidity_2m}" />
+    </VerticalStackLayout>
+</ContentPage>
