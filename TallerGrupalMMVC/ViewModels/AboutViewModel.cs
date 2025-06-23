@@ -35,7 +35,7 @@ namespace TallerGrupalMMVC.ViewModels
                 new TeamMember
                 {
                     Name = "Johann Calva",
-                    Age = 22,
+                    Age = 21,
                     FavoriteSport = "Fútbol",
                     PhotoPath = "https://purina.cl/sites/default/files/2025-04/razas-de-gatos.jpg", // Coloca tus imágenes en Resources/Images/
                     Role = "Desarrollador Frontend",
@@ -44,8 +44,8 @@ namespace TallerGrupalMMVC.ViewModels
                 new TeamMember
                 {
                     Name = "Mathias Ruales",
-                    Age = 21,
-                    FavoriteSport = "Tenis",
+                    Age = 22,
+                    FavoriteSport = "Taekwando",
                     PhotoPath = "https://i.blogs.es/fed92e/topicochinos/450_1000.webp",
                     Role = "Desarrolladora Backend",
                     Description = "Especialista en APIs y arquitectura de software."
@@ -53,7 +53,7 @@ namespace TallerGrupalMMVC.ViewModels
                 new TeamMember
                 {
                     Name = "Jean Rodriguez",
-                    Age = 23,
+                    Age = 20,
                     FavoriteSport = "Baloncesto",
                     PhotoPath = "https://phantom-marca.unidadeditorial.es/1e0f14f4f6518b0e3fd9926d3c91bcab/resize/828/f/jpg/assets/multimedia/imagenes/2024/10/18/17292382828020.jpg",
                     Role = "Diseñador UX/UI",

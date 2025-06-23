@@ -22,10 +22,10 @@ public static class MauiProgram
         // Servicios
         builder.Services.AddSingleton<GeoLocationServices>();
         builder.Services.AddSingleton<WeatherServices>();
-
+        
         // ViewModels
         builder.Services.AddTransient<WeatherViewModel>();
-
+        
         // Views
         builder.Services.AddTransient<WeatherView>();
 
