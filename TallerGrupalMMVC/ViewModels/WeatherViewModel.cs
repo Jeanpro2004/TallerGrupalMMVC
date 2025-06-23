@@ -11,10 +11,11 @@ using System.Windows.Input;
 
 namespace TallerGrupalMMVC.ViewModels
 {
-    class WeatherViewModel: INotifyPropertyChanged
+    public class WeatherViewModel : INotifyPropertyChanged
     {
-
         private WeatherData _weatherData = new WeatherData();
+        private bool _isLoading = false;
+        private string _errorMessage = string.Empty;
 
         public WeatherData WeatherDataInfo
         {
@@ -29,26 +30,63 @@ namespace TallerGrupalMMVC.ViewModels
             }
         }
 
-        public  ICommand RecalculateWeather { get; set; }
-        public WeatherViewModel()
+        public bool IsLoading
         {
-            GetCurrentWeatherFromLocation();
-
+            get => _isLoading;
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public async void GetCurrentWeatherFromLocation()
+        public string ErrorMessage
         {
+            get => _errorMessage;
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-            WeatherServices weatherServices = new WeatherServices();
-            WeatherDataInfo = await weatherServices.GetCurrentLocatonWeatherAsync();
-  
+        public ICommand RefreshWeatherCommand { get; set; }
+
+        public WeatherViewModel()
+        {
+            RefreshWeatherCommand = new Command(async () => await GetCurrentWeatherFromLocation());
+            _ = GetCurrentWeatherFromLocation(); // Llamada inicial asíncrona
+        }
+
+        public async Task GetCurrentWeatherFromLocation()
+        {
+            try
+            {
+                IsLoading = true;
+                ErrorMessage = string.Empty;
+
+                WeatherServices weatherServices = new WeatherServices();
+                WeatherDataInfo = await weatherServices.GetCurrentLocationWeatherAsync();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Error al obtener datos del clima: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        
 
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

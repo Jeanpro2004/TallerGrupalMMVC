@@ -8,10 +8,27 @@
     Shell.FlyoutBehavior="Disabled"
     Title="TallerGrupalMMVC">
 
- 
-    <ShellContent
-        Title="Weather Models"
-        ContentTemplate="{DataTemplate views:WeatherView}"
-        Route="WeatherView" />
+    <TabBar>
+        <Tab Title="Weather Models" Icon="cloud.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:WeatherView}"
+                Route="WeatherView" />
+        </Tab>
+        <Tab Title="Notas" Icon="notes.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:NotesView}"
+                Route="NotesView" />
+        </Tab>
+        <Tab Title="Recordatorios" Icon="reminder.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:RecordatoriosView}"
+                Route="RecordatoriosView" />
+        </Tab>
+        <Tab Title="Acerca de" Icon="about.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:AboutView}"
+                Route="AboutView" />
+        </Tab>
+    </TabBar>
 
 </Shell>

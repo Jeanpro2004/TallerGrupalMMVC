@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace TallerGrupalMMVC.Models
 {
-    class WeatherModels
+    public class WeatherModels
     {
-
         public class WeatherData
         {
             public double latitude { get; set; }
             public double longitude { get; set; }
-            public double generationtime_ms { get; set; }
+            public double generationtime_ms { get; set; } 
             public int utc_offset_seconds { get; set; }
             public string timezone { get; set; }
             public string timezone_abbreviation { get; set; }
@@ -37,8 +36,7 @@ namespace TallerGrupalMMVC.Models
             public int interval { get; set; }
             public double temperature_2m { get; set; }
             public int relative_humidity_2m { get; set; }
-            public int rain { get; set; }
+            public double rain { get; set; }
         }
-
     }
 }

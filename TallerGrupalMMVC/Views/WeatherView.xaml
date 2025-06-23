@@ -3,27 +3,211 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TallerGrupalMMVC.ViewModels"
              x:Class="TallerGrupalMMVC.Views.WeatherView"
-             Title="WeatherView">
+             Title="Información del Clima"
+             BackgroundColor="#87CEEB">
 
     <ContentPage.BindingContext>
         <vm:WeatherViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout>
-        <Label 
-           x:Name="LabelTemperature"
-           Text="{Binding WeatherDataInfo.current.temperature_2m}" />
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Label 
-           x:Name="LabelTemperatureUnit"
-           Text="{Binding WeatherDataInfo.current_units.temperature_2m}" />
+            <!-- Header -->
+            <Frame Grid.Row="0"
+                   BackgroundColor="#4682B4"
+                   CornerRadius="15"
+                   HasShadow="True"
+                   Padding="20">
+                <StackLayout>
+                    <Label Text="🌤️ Clima Actual"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label Text="{Binding WeatherDataInfo.current.time, StringFormat='Actualizado: {0}'}"
+                           FontSize="14"
+                           TextColor="LightBlue"
+                           HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
 
-        <Label 
-           x:Name="LabelHumidity"
-           Text="{Binding WeatherDataInfo.current.relative_humidity_2m}" />
+            <!-- Weather Info Cards -->
+            <StackLayout Grid.Row="1" Spacing="15">
 
-        <Label 
-           x:Name="LabelHumidityUnit"
-           Text="{Binding WeatherDataInfo.current_units.relative_humidity_2m}" />
-    </VerticalStackLayout>
+                <!-- Temperature Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="20">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Label Grid.Column="0"
+                               Text="🌡️"
+                               FontSize="40"
+                               VerticalOptions="Center"/>
+                        <StackLayout Grid.Column="1" 
+                                   Spacing="5"
+                                   VerticalOptions="Center">
+                            <Label Text="Temperatura"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333"/>
+                            <Label Text="Temperatura actual del ambiente"
+                                   FontSize="12"
+                                   TextColor="#666"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="2" 
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center">
+                            <Label Text="{Binding WeatherDataInfo.current.temperature_2m}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF6B35"
+                                   HorizontalOptions="End"/>
+                            <Label Text="{Binding WeatherDataInfo.current_units.temperature_2m}"
+                                   FontSize="14"
+                                   TextColor="#FF6B35"
+                                   HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Humidity Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="20">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Label Grid.Column="0"
+                               Text="💧"
+                               FontSize="40"
+                               VerticalOptions="Center"/>
+                        <StackLayout Grid.Column="1" 
+                                   Spacing="5"
+                                   VerticalOptions="Center">
+                            <Label Text="Humedad"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333"/>
+                            <Label Text="Humedad relativa del aire"
+                                   FontSize="12"
+                                   TextColor="#666"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="2" 
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center">
+                            <Label Text="{Binding WeatherDataInfo.current.relative_humidity_2m}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="#4A90E2"
+                                   HorizontalOptions="End"/>
+                            <Label Text="{Binding WeatherDataInfo.current_units.relative_humidity_2m}"
+                                   FontSize="14"
+                                   TextColor="#4A90E2"
+                                   HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Rain Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="20">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Label Grid.Column="0"
+                               Text="🌧️"
+                               FontSize="40"
+                               VerticalOptions="Center"/>
+                        <StackLayout Grid.Column="1" 
+                                   Spacing="5"
+                                   VerticalOptions="Center">
+                            <Label Text="Lluvia"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333"/>
+                            <Label Text="Precipitación actual"
+                                   FontSize="12"
+                                   TextColor="#666"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="2" 
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center">
+                            <Label Text="{Binding WeatherDataInfo.current.rain}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="#7B68EE"
+                                   HorizontalOptions="End"/>
+                            <Label Text="{Binding WeatherDataInfo.current_units.rain}"
+                                   FontSize="14"
+                                   TextColor="#7B68EE"
+                                   HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Location Info -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="20">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label Grid.Column="0"
+                               Text="📍"
+                               FontSize="40"
+                               VerticalOptions="Center"/>
+                        <StackLayout Grid.Column="1" 
+                                   Spacing="5"
+                                   VerticalOptions="Center">
+                            <Label Text="Ubicación"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#333"/>
+                            <Label Text="{Binding WeatherDataInfo.latitude, StringFormat='Lat: {0:F4}'}"
+                                   FontSize="12"
+                                   TextColor="#666"/>
+                            <Label Text="{Binding WeatherDataInfo.longitude, StringFormat='Lng: {0:F4}'}"
+                                   FontSize="12"
+                                   TextColor="#666"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Error Message -->
+                <Label Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
+                       TextColor="Red"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+
+            </StackLayout>
+
+            <!-- Refresh Button -->
+            <Button Grid.Row="2"
+                    Text="🔄 Actualizar Clima"
+                    Command="{Binding RefreshWeatherCommand}"
+                    BackgroundColor="#32CD32"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"/>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator Grid.Row="1"
+                             IsVisible="{Binding IsLoading}"
+                             IsRunning="{Binding IsLoading}"
+                             Color="#4682B4"
+                             Scale="1.5"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"/>
+
+        </Grid>
+    </ScrollView>
 </ContentPage>

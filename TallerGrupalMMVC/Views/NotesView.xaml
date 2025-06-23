@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TallerGrupalMMVC.ViewModels"
+             x:Class="TallerGrupalMMVC.Views.NotesView"
+             Title="📝 Notas"
+             BackgroundColor="#F5F5DC">
+
+    <ContentPage.BindingContext>
+        <vm:NotesViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with Add Button -->
+        <Frame Grid.Row="0"
+               BackgroundColor="#8B4513"
+               CornerRadius="0"
+               HasShadow="True"
+               Padding="15">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Mis Notas"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center"/>
+                <Button Grid.Column="1"
+                        Text="➕ Nueva"
+                        Command="{Binding AddNoteCommand}"
+                        BackgroundColor="#DAA520"
+                        TextColor="White"
+                        FontSize="14"
+                        CornerRadius="15"
+                        Padding="15,8"/>
+            </Grid>
+        </Frame>
+
+        <!-- Notes List -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsLoading}"
+                     Command="{Binding LoadNotesCommand}"
+                     RefreshColor="#8B4513">
+            <CollectionView ItemsSource="{Binding Notes}"
+                          SelectedItem="{Binding SelectedNote}"
+                          SelectionMode="Single"
+                          BackgroundColor="Transparent">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" 
+                               HorizontalOptions="Center"
+                               Padding="50">
+                        <Label Text="📝"
+                               FontSize="80"
+                               HorizontalOptions="Center"/>
+                        <Label Text="No hay notas aún"
+                               FontSize="18"
+                               TextColor="#666"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Toca 'Nueva' para crear tu primera nota"
+                               FontSize="14"
+                               TextColor="#888"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="15,10">
+                            <Frame BackgroundColor="White"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   Padding="0">
+                                <Grid RowDefinitions="*,Auto" 
+                                      ColumnDefinitions="*,Auto">
+
+                                    <!-- Note Content -->
+                                    <StackLayout Grid.Row="0" Grid.Column="0" 
+                                               Padding="20,15">
+                                        <Editor Text="{Binding Text}"
+                                                FontSize="16"
+                                                AutoSize="TextChanges"
+                                                MaxLength="500"
+                                                Placeholder="Escribe tu nota aquí..."
+                                                BackgroundColor="Transparent"/>
+                                    </StackLayout>
+
+                                    <!-- Action Buttons -->
+                                    <StackLayout Grid.Row="0" Grid.Column="1" 
+                                               Orientation="Vertical"
+                                               Spacing="10"
+                                               Padding="10"
+                                               VerticalOptions="Center">
+                                        <Button Text="💾"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NotesViewModel}}, Path=SaveNoteCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="#32CD32"
+                                                TextColor="White"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                CornerRadius="20"
+                                                FontSize="16"/>
+                                        <Button Text="🗑️"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NotesViewModel}}, Path=DeleteNoteCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="#FF6B6B"
+                                                TextColor="White"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                CornerRadius="20"
+                                                FontSize="16"/>
+                                    </StackLayout>
+
+                                    <!-- Date Footer -->
+                                    <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                           Text="{Binding DateDisplay}"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           Padding="20,0,20,15"
+                                           HorizontalOptions="End"/>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                         IsVisible="{Binding IsLoading}"
+                         IsRunning="{Binding IsLoading}"
+                         Color="#8B4513"
+                         Scale="1.5"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>
